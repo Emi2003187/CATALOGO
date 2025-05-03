@@ -5,7 +5,9 @@ luego ejecuta esto
 
 - pip install -r requirements.txt
 
+EJECUTAR MIGRATE
 
+Y EJECUTAR EL POPULATE_DB
 
 CUENTA ADMIN
 
