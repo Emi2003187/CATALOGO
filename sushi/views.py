@@ -420,7 +420,7 @@ def eliminar_producto(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
     producto.delete()
     messages.success(request, "Producto eliminado correctamente.")
-    return redirect('crud_productos')
+    return redirect('catalogo')
 
 @login_required
 def ver_ventas(request):

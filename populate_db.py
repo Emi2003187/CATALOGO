@@ -2,6 +2,7 @@ import os
 import django
 import random
 from decimal import Decimal
+from django.core.files import File
 
 # Inicializar Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'FoodTrackOrder.settings')
@@ -9,82 +10,100 @@ django.setup()
 
 from sushi.models import CategoriaProducto, CategoriaCliente, Producto, Usuario
 
-# 1. Crear Categorías de Productos
-categorias_productos = [
-    "Memorias RAM", "Tarjetas Madre", "Gabinetes", "Procesadores", "Discos Duros", "Fuentes de Poder"
-]
-
+# Categorías principales
+categorias_productos = ["Hardware", "Software"]
 for nombre in categorias_productos:
     CategoriaProducto.objects.get_or_create(nombre=nombre)
 
-# 2. Crear Categorías de Clientes
-categorias_clientes = [
-    "Ferretería", "Clínica", "Empresa", "Admin"
-]
-
+# Categorías de cliente (Admin solo para usuarios)
+categorias_clientes = ["Ferretería", "Clínica", "Empresa", "Admin"]
 for nombre in categorias_clientes:
     CategoriaCliente.objects.get_or_create(nombre=nombre)
 
-# 3. Crear Productos repetidos por cliente
-productos = [
-    {
-        "nombre": "Corsair Vengeance LPX 16GB DDR4",
-        "descripcion": "Modelo: CMK16GX4M2B3200C16\nCapacidad: 16GB (2x8GB)\nVelocidad: 3200MHz\nTipo: DDR4\nColor: Negro",
-        "precio_base": 1200.00,
-        "categoria_producto": "Memorias RAM"
-    },
-    {
-        "nombre": "ASUS ROG STRIX B550-F",
-        "descripcion": "Modelo: B550-F\nSocket: AM4\nFormato: ATX\nCompatible: Ryzen 3000, 5000 series\nConectividad: PCIe 4.0, USB 3.2",
-        "precio_base": 4200.00,
-        "categoria_producto": "Tarjetas Madre"
-    },
-    {
-        "nombre": "NZXT H510 Case",
-        "descripcion": "Modelo: H510\nTipo: Mid Tower\nColor: Negro\nMaterial: Acero y Vidrio Templado\nCompatibilidad: ATX, Micro-ATX",
-        "precio_base": 2000.00,
-        "categoria_producto": "Gabinetes"
-    },
+# Productos de Hardware
+productos_hardware = [
     {
         "nombre": "Intel Core i5-12400F",
-        "descripcion": "Modelo: BX8071512400F\nNúcleos: 6\nHilos: 12\nFrecuencia Base: 2.5GHz\nSocket: LGA1700",
-        "precio_base": 3900.00,
-        "categoria_producto": "Procesadores"
+        "descripcion": "Núcleos: 6, Hilos: 12, Socket: LGA1700",
+        "precio_base": 3900.00
     },
     {
-        "nombre": "Western Digital Blue 1TB HDD",
-        "descripcion": "Modelo: WD10EZEX\nCapacidad: 1TB\nFormato: 3.5\"\nVelocidad: 7200 RPM\nInterfaz: SATA 6Gb/s",
-        "precio_base": 750.00,
-        "categoria_producto": "Discos Duros"
-    },
-    {
-        "nombre": "Corsair CV550 550W 80+ Bronze",
-        "descripcion": "Modelo: CP-9020210-NA\nPotencia: 550 Watts\nCertificación: 80 Plus Bronze\nFormato: ATX\nConectores: ATX, PCIe, SATA",
-        "precio_base": 1050.00,
-        "categoria_producto": "Fuentes de Poder"
-    },
+        "nombre": "Corsair Vengeance 16GB DDR4",
+        "descripcion": "Velocidad: 3200MHz, Tipo: DDR4",
+        "precio_base": 1200.00
+    }
 ]
 
-# Obtener todas las categorías de cliente y producto
-clientes = CategoriaCliente.objects.all()
-categorias_producto = {cp.nombre: cp for cp in CategoriaProducto.objects.all()}
+# Productos de Software
+productos_software = [
+    {
+        "nombre": "Microsoft Office 365",
+        "descripcion": "Word, Excel, PowerPoint y más. Suscripción anual.",
+        "precio_base": 1800.00
+    },
+    {
+        "nombre": "Adobe Photoshop CC",
+        "descripcion": "Edición profesional de imágenes. Licencia mensual.",
+        "precio_base": 1500.00
+    },
+    {
+        "nombre": "AutoCAD 2024",
+        "descripcion": "Diseño 2D/3D para ingeniería y arquitectura.",
+        "precio_base": 6500.00
+    },
+    {
+        "nombre": "Antivirus Kaspersky",
+        "descripcion": "Protección básica y avanzada para tu equipo.",
+        "precio_base": 850.00
+    }
+]
 
-# Crear productos para cada categoría de cliente con precio ajustado
-for prod in productos:
-    base_precio = prod["precio_base"]
-    for cliente in clientes:
-        precio_ajustado = base_precio * random.uniform(0.85, 1.25)
-        Producto.objects.get_or_create(
+# Obtener instancias necesarias
+categoria_hw = CategoriaProducto.objects.get(nombre="Hardware")
+categoria_sw = CategoriaProducto.objects.get(nombre="Software")
+categorias_cliente = CategoriaCliente.objects.exclude(nombre__iexact="Admin")
+
+# Rutas de imagen
+img_hw_path = os.path.join("img_populate", "case.jpg")
+img_sw_path = os.path.join("img_populate", "sw demo.png")
+
+def obtener_imagen(ruta):
+    if os.path.exists(ruta):
+        return File(open(ruta, 'rb'))
+    return None
+
+# Insertar productos de hardware
+for prod in productos_hardware:
+    for cliente in categorias_cliente:
+        precio = Decimal(round(prod["precio_base"] * random.uniform(0.9, 1.2), 2))
+        producto, creado = Producto.objects.get_or_create(
             nombre=prod["nombre"],
             descripcion=prod["descripcion"],
-            precio=Decimal(round(precio_ajustado, 2)),
-            categoria_producto=categorias_producto[prod["categoria_producto"]],
+            precio=precio,
+            categoria_producto=categoria_hw,
             categoria_cliente=cliente
         )
+        if creado:
+            imagen = obtener_imagen(img_hw_path)
+            if imagen:
+                producto.imagen.save("case.jpg", imagen, save=True)
 
-# 4. Crear Usuario "Emiliong" si no existe
+# Insertar productos de software
+for prod in productos_software:
+    for cliente in categorias_cliente:
+        precio = Decimal(round(prod["precio_base"] * random.uniform(0.9, 1.2), 2))
+        producto, creado = Producto.objects.get_or_create(
+            nombre=prod["nombre"],
+            descripcion=prod["descripcion"],
+            precio=precio,
+            categoria_producto=categoria_sw,
+            categoria_cliente=cliente
+        )
+        if created := obtener_imagen(img_sw_path):
+            producto.imagen.save("sw demo.png", created, save=True)
+
+# Crear usuario Emiliong
 admin_categoria = CategoriaCliente.objects.get(nombre="Admin")
-
 usuario_emiliong, creado = Usuario.objects.get_or_create(
     username="Emiliong",
     defaults={
@@ -100,4 +119,4 @@ if creado:
     usuario_emiliong.set_password('123456')
     usuario_emiliong.save()
 
-print("🎉 Base de datos poblada exitosamente con productos por categoría.")
+print("🎉 Base de datos poblada exitosamente con imágenes y productos.")
