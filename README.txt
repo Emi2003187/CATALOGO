@@ -5,16 +5,18 @@ luego ejecuta esto
 
 - pip install -r requirements.txt
 
+EJECUTAR MIGRATE
 
+Y EJECUTAR EL POPULATE_DB
 
 CUENTA ADMIN
 
-Admin
-1234
+Emiliong
+123456
 
 
+si quieren crear un admin, la categoria debe ser admin
+esa siempre debe de estar, la categoria admin
 
-CUENTA OPERADOR
 
-OPERADOR1
-1234
+en el view de enviar solicitud, es donde se pone el correo a donde quieren que vaya el correo con el pdf
