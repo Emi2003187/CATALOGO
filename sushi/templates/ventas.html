@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+  <h2 class="mb-4">📋 {% if user.categoria_cliente.nombre|lower == "admin" %}Solicitudes de Venta{% else %}Mis Solicitudes{% endif %}</h2>
+
+  <form method="GET" class="mb-4 d-flex" role="search">
+    <input type="text" name="q" class="form-control me-2" placeholder="Buscar por nombre, teléfono o folio" value="{{ query }}">
+    <button type="submit" class="btn btn-outline-primary">🔍 Buscar</button>
+  </form>
+
+  {% if ventas %}
+    <div class="table-responsive">
+      <table class="table table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Folio</th>
+            <th>Cliente</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Total</th>
+            <th>Fecha</th>
+            {% if user.categoria_cliente.nombre|lower == "admin" %}
+              <th>Acciones</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for venta in ventas %}
+            <tr>
+              <td><a href="{% url 'detalle_venta' venta.id %}"><strong>{{ venta.folio }}</strong></a></td>
+              <td>{{ venta.nombre_cliente }}</td>
+              <td>{{ venta.telefono_cliente }}</td>
+              <td>{{ venta.email_cliente }}</td>
+              <td>${{ venta.total }}</td>
+              <td>{{ venta.fecha|date:"Y-m-d H:i" }}</td>
+
+              {% if user.categoria_cliente.nombre|lower == "admin" %}
+              <td>
+                <a href="{% url 'editar_venta' venta.id %}" class="btn btn-sm btn-warning">✏️ Editar</a>
+                <a href="{% url 'eliminar_venta' venta.id %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta venta?')">🗑️</a>
+              </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info">No se encontraron solicitudes.</div>
+  {% endif %}
+</div>
+
+{% endblock %}

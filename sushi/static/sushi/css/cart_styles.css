@@ -1,0 +1,145 @@
+/* Primero los estilos para el fondo */
+.bg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+  }
+  
+  .bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  /* Overlay para mejorar la legibilidad */
+  .bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según necesites */
+    z-index: -1;
+  }
+  
+  /* Actualización de los estilos existentes */
+  :root {
+    --primary: #e94f37;
+    --secondary: #393e46;
+    --accent: #44bd32;
+    --light: #f6f6f6;
+    --dark: #222831;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --navbar-height: 60px;
+  }
+  
+  body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark);
+    line-height: 1.6;
+    padding-top: var(--navbar-height);
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  .cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    position: relative;
+    z-index: 1; /* Asegura que el contenido esté por encima del fondo */
+  }
+  
+  /* Hacer las tarjetas más transparentes para ver el fondo */
+  .cart-item {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    transition: all 0.2s ease;
+  }
+  
+  .cart-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  
+  /* Actualizar el título para mejor contraste */
+  h1 {
+    text-align: center;
+    color: white;
+    margin: 1rem 0;
+    font-size: 2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  h1:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estado vacío con fondo semitransparente */
+  .empty-cart {
+    text-align: center;
+    padding: 2rem;
+    color: var(--dark);
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+ 
+  /* Estilos para la barra de navegación */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  position: fixed; /* Evita que se mueva con el zoom */
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+  color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffcc00 !important;
+}
+
+/* Ajuste de imagen en el formulario */
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+
+.text-center img {
+  max-width: 300%;  /* Ajusta el tamaño de la imagen */
+  max-height: 150px;
+  object-fit: contain;
+}

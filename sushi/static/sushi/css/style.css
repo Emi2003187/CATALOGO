@@ -1,0 +1,316 @@
+body {
+    background: url("/static/sushi/images/sushi5.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    overflow: hidden; /* Evita el desplazamiento al hacer zoom */
+    position: fixed; /* Evita que se mueva con el zoom */
+}
+
+.login-form {
+    width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fija el formulario en la pantalla */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el formulario */
+}
+
+.logo {
+    max-width: 250px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    position: fixed; /* Evita que se mueva con el zoom */
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffcc00 !important;
+}
+
+/* Ajuste de imagen en el formulario */
+.text-center {
+    display: flex;
+    justify-content: center;
+}
+
+.text-center img {
+    max-width: 300%;  /* Ajusta el tamaño de la imagen */
+    max-height: 150px;
+    object-fit: contain;
+}
+
+/* estilos para el signup */
+body {
+    background: url("/static/sushi/images/sushi5.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    position: fixed; /* Evita que se mueva con el zoom */
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    position: fixed; /* Fijar el formulario para que no se mueva con el zoom */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.text-center {
+    text-align: center;
+}
+ 
+/* Main Styles for Sushi Menu */
+:root {
+  --primary: #e94f37;
+  --secondary: #393e46;
+  --accent: #44bd32;
+  --light: #f6f6f6;
+  --dark: #222831;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+h1 {
+  text-align: center;
+  color: var(--dark);
+  margin: 2rem 0;
+  font-size: 2.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+h1:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary);
+}
+
+/* Menu List Styling */
+ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+li {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  padding: 1.5rem;
+}
+
+li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--shadow);
+}
+
+/* Dish Information */
+h3 {
+  color: var(--dark);
+  margin-top: 0;
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--light);
+  padding-bottom: 0.5rem;
+}
+
+p {
+  margin: 0.5rem 0;
+  color: var(--secondary);
+}
+
+img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+h4 {
+  color: var(--dark);
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* Button Styling */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-right: 0.5rem;
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-success {
+  background-color: var(--accent);
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #3aa528;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-danger {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #d44027;
+}
+
+.agregar-carrito {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+
+/* Empty State */
+li:only-child {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: var(--secondary);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  ul {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Price Styling */
+p strong:contains("Precio") + span {
+  font-size: 1.2rem;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+/* Admin Actions Container */
+.admin-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}

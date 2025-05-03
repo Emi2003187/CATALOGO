@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="mb-4">✏️ Editar Usuario</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="username" class="form-label">Nombre de Usuario:</label>
+      <input type="text" name="username" class="form-control" value="{{ usuario.username }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico:</label>
+      <input type="email" name="email" class="form-control" value="{{ usuario.email }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="telefono" class="form-label">Teléfono:</label>
+      <input type="text" name="telefono" class="form-control" value="{{ usuario.telefono }}">
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Nueva Contraseña (opcional):</label>
+      <input type="password" name="password" class="form-control" placeholder="Dejar en blanco para no cambiar">
+    </div>
+
+    <div class="mb-3">
+      <label for="categoria_cliente" class="form-label">Categoría del Usuario:</label>
+      <select name="categoria_cliente" class="form-select" required>
+        {% for categoria in categorias %}
+          <option value="{{ categoria.id }}" {% if categoria.id == usuario.categoria_cliente.id %}selected{% endif %}>
+            {{ categoria.nombre }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a href="{% url 'crud_usuarios' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

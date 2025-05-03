@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Catálogo de Productos</h1>
+    <p class="lead text-muted">Explora los productos disponibles y agrega los que necesites a tu carrito.</p>
+  </div>
+
+  {% if user.categoria_cliente.nombre|lower == "admin" %}
+    <div class="text-end mb-4">
+      <a href="{% url 'crear_producto' %}" class="btn btn-primary">➕ Crear Nuevo Producto</a>
+    </div>
+  {% endif %}
+
+  <!-- Filtros de búsqueda con estilo Bootstrap -->
+  <form method="GET" class="row g-2 align-items-center mb-4 shadow-sm p-3 rounded bg-light">
+    <div class="col-md-5">
+      <div class="input-group">
+        <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Buscar productos por nombre...">
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <select name="categoria" class="form-select">
+        <option value="">Todas las categorías</option>
+        {% for cat in categorias %}
+          <option value="{{ cat.id }}" {% if categoria_seleccionada == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3 d-grid">
+      <button class="btn btn-outline-primary" type="submit">BUSCAR</button>
+    </div>
+  </form>
+
+  {% if productos %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for producto in productos %}
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <div class="d-flex align-items-center justify-content-center bg-light" style="height: 220px; overflow: hidden;">
+              {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+              {% else %}
+                <img src="{% static 'sushi/images/no-image.png' %}" alt="Sin Imagen" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+              {% endif %}
+            </div>
+
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title text-primary">
+                <a href="{% url 'detalle_producto' producto.id %}" class="text-decoration-none">{{ producto.nombre }}</a>
+              </h5>
+              <p class="card-text small text-muted mb-1">{{ producto.descripcion|default:"Sin descripción." }}</p>
+              <p class="mb-1"><strong>Precio:</strong> ${{ producto.precio }}</p>
+              <p class="mb-1 text-muted"><strong>Categoría Producto:</strong> {{ producto.categoria_producto.nombre }}</p>
+
+              {% if user.categoria_cliente.nombre|lower == "admin" %}
+                <p class="mb-3 text-muted"><strong>Categoría Cliente:</strong> {{ producto.categoria_cliente.nombre }}</p>
+              {% endif %}
+
+              <div class="mt-auto">
+                <button class="btn btn-outline-primary w-100 agregar-carrito" data-producto="{{ producto.id }}">
+                  🛒 Agregar al Carrito
+                </button>
+              </div>
+            </div>
+
+            {% if user.categoria_cliente.nombre|lower == "admin" %}
+              <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'editar_producto' producto.id %}" class="btn btn-sm btn-warning w-50 me-1">✏️ Editar</a>
+                <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-sm btn-danger w-50 ms-1" onclick="return confirm('¿Eliminar este producto?');">🗑️ Eliminar</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Paginación -->
+    {% if productos.has_other_pages %}
+    <nav aria-label="Paginación de productos" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if productos.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ productos.previous_page_number }}&q={{ query }}&categoria={{ categoria_seleccionada }}">Anterior</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+        {% endif %}
+
+        {% for i in productos.paginator.page_range %}
+          {% if productos.number == i %}
+            <li class="page-item active"><span class="page-link">{{ i }}</span></li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}&q={{ query }}&categoria={{ categoria_seleccionada }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+
+        {% if productos.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ productos.next_page_number }}&q={{ query }}&categoria={{ categoria_seleccionada }}">Siguiente</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+  {% else %}
+    <div class="alert alert-info text-center" role="alert">
+      No hay productos disponibles en este momento.
+    </div>
+  {% endif %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".agregar-carrito").forEach(button => {
+    button.addEventListener("click", function () {
+      let productoId = this.dataset.producto;
+      fetch(`/carrito/agregar/${productoId}/`)
+        .then(response => response.json())
+        .then(data => {
+          alert("Producto agregado al carrito");
+          location.reload();
+        });
+    });
+  });
+});
+</script>
+{% endblock %}

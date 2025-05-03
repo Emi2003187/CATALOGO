@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+
+  <!-- Botón de volver -->
+  <div class="mb-4">
+    <a href="{% url 'ver_ventas' %}" class="btn btn-outline-secondary">← Volver a Solicitudes</a>
+  </div>
+
+  <h2 class="mb-3">📄 Detalle de la Solicitud</h2>
+
+  <!-- Información general de la venta -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm p-3">
+        <p><strong>Folio:</strong> {{ venta.folio }}</p>
+        <p><strong>Cliente:</strong> {{ venta.nombre_cliente }}</p>
+        <p><strong>Correo:</strong> {{ venta.email_cliente }}</p>
+        <p><strong>Teléfono:</strong> {{ venta.telefono_cliente|default:"N/A" }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm p-3">
+        <p><strong>Observaciones:</strong> {{ venta.observaciones|default:"Sin observaciones" }}</p>
+        <p><strong>Fecha:</strong> {{ venta.fecha|date:"Y-m-d H:i" }}</p>
+        <p><strong>Total:</strong> <span class="text-success fw-bold">${{ venta.total }}</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de productos -->
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in productos %}
+        <tr>
+          <td>{{ item.nombre }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

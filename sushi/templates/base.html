@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    {% include '_navbar.html' %}
+    
+    {% block content %}
+    {% endblock %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function actualizarConteoCarrito() {
+            fetch("{% url 'obtener_conteo_carrito' %}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("cart-count").innerText = data.total_items;
+                });
+        }
+
+        document.querySelectorAll(".agregar-carrito").forEach(button => {
+            button.addEventListener("click", function () {
+                let platilloId = this.dataset.platillo;
+                fetch(`/carrito/agregar/${platilloId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        alert("Platillo agregado al carrito");
+                        actualizarConteoCarrito();
+                    });
+            });
+        });
+
+        document.querySelectorAll(".eliminar-carrito").forEach(button => {
+            button.addEventListener("click", function () {
+                let platilloId = this.dataset.platillo;
+                fetch(`/carrito/eliminar/${platilloId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        alert("Platillo eliminado del carrito");
+                        location.reload();
+                    });
+            });
+        });
+
+        actualizarConteoCarrito();
+    });
+    </script>
+
+  </body>
+</html>

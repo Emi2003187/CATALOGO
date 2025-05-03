@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-box {
+      max-width: 400px;
+      width: 100%;
+      padding: 30px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .login-box img {
+      max-width: 120px;
+    }
+  </style>
+</head>
+
+<div class="container login-container">
+  <div class="login-box text-center">
+
+    <!-- Logo -->
+    <img src="{% static 'sushi/images/logo_Login.png' %}" alt="SPI Logo" class="mb-3">
+
+    <!-- Título -->
+    <h2 class="text-primary mb-4">Iniciar Sesión</h2>
+
+    <!-- Mensaje de error -->
+    {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <!-- Formulario -->
+    <form action="{% url 'signin' %}" method="POST">
+      {% csrf_token %}
+
+      <div class="mb-3 text-start">
+        <label for="id_username" class="form-label">Usuario</label>
+        <input type="text" name="username" id="id_username" class="form-control" required>
+      </div>
+
+      <div class="mb-4 text-start">
+        <label for="id_password" class="form-label">Contraseña</label>
+        <input type="password" name="password" id="id_password" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Ingresar</button>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+  <div class="alert alert-danger p-4">
+    <h4 class="mb-3">¿Estás seguro de eliminar esta venta?</h4>
+    <p>
+      <strong>Folio:</strong> {{ venta.folio }}<br>
+      <strong>Cliente:</strong> {{ venta.nombre_cliente }}<br>
+      <strong>Total:</strong> ${{ venta.total }}<br>
+      <strong>Fecha:</strong> {{ venta.fecha|date:"Y-m-d H:i" }}
+    </p>
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'ver_ventas' %}" class="btn btn-secondary">❌ Cancelar</a>
+        <button type="submit" class="btn btn-danger">🗑️ Confirmar Eliminación</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

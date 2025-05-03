@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+</head>
+
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-primary">SPI - Soluciones para la Industria</h1>
+    <p class="lead text-muted">Tu aliado en tecnología, instalación y soluciones digitales.</p>
+  </div>
+
+  <div class="row align-items-center">
+    <div class="col-md-6 mb-4">
+      <img src="{% static 'sushi/images/logo spi.png' %}" alt="Soluciones Industriales" class="img-fluid rounded shadow">
+    </div>
+    <div class="col-md-6">
+      <h3 class="text-secondary mb-3">¿Quiénes somos?</h3>
+      <p>
+        <strong>SPI (Soluciones para la Industria)</strong> es una empresa mexicana dedicada a brindar soluciones integrales 
+        para organizaciones que buscan eficiencia y soporte tecnológico. Nuestro compromiso es ayudarte a crecer 
+        mediante herramientas digitales, desarrollo a medida y soporte técnico confiable.
+      </p>
+      <ul class="list-group list-group-flush mt-4">
+        <li class="list-group-item">💻 Desarrollo de Software a la medida</li>
+        <li class="list-group-item">🖥️ Servicios técnicos en cómputo, hardware y redes</li>
+        <li class="list-group-item">🔧 Instalación y configuración de servidores</li>
+        <li class="list-group-item">📦 Venta e instalación de equipos industriales y empresariales</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-5 text-center">
+    <h4 class="text-dark mb-3">¿Tienes un proyecto en mente?</h4>
+    <a href="{% url 'signin' %}" class="btn btn-outline-primary btn-lg">Inicia Sesión</a>
+  </div>
+</div>
+{% endblock %}

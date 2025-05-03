@@ -1,0 +1,224 @@
+:root {
+    --primary: #c41e3a;
+    --secondary: #1a1a1a;
+    --accent: #d4af37;
+    --success: #28a745;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --navbar-height: 60px;
+  }
+  
+  /* Estilos del fondo */
+  .bg-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -2;
+    overflow: hidden;
+  }
+  
+  .bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .bg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+  }
+  
+  /* Contenedor principal */
+  .form-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+  
+  /* Título */
+  h1 {
+    text-align: center;
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  h1::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Formulario */
+  .form-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* Campos del formulario */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+    background: white;
+  }
+  
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  /* Mensaje de error */
+  .error-message {
+    color: var(--primary);
+    background: rgba(196, 30, 58, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(196, 30, 58, 0.2);
+  }
+  
+  /* Botón de guardar */
+  .btn-save {
+    background: var(--accent);
+    color: var(--dark);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: #c4a130;
+  }
+  
+  .btn-save:active {
+    transform: translateY(0);
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .form-container {
+      margin: 1rem;
+      padding: 1rem;
+    }
+  
+    .form-card {
+      padding: 1.5rem;
+    }
+  
+    h1 {
+      font-size: 2rem;
+    }
+  
+    .btn-save {
+      padding: 0.875rem 1.5rem;
+    }
+  }
+  
+  /* Validación visual */
+  input:invalid,
+  textarea:invalid,
+  select:invalid {
+    border-color: var(--primary);
+  }
+  
+  /* Efectos de hover en campos */
+  input:hover,
+  textarea:hover,
+  select:hover {
+    border-color: var(--accent);
+  }
+  
+  /* Estilos para el select */
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23343a40' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+  
+  /* Estilos para campos deshabilitados */
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+  

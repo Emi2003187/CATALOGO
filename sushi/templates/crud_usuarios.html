@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">👥 Gestión de Usuarios</h2>
+    <a href="{% url 'crear_usuario' %}" class="btn btn-outline-primary">
+      ➕ Crear Nuevo Usuario
+    </a>
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Usuario</th>
+          <th>Email</th>
+          <th>Categoría</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+          <td>{{ usuario.id }}</td>
+          <td>
+            <a href="{% url 'detalle_usuario' usuario.id %}" class="text-decoration-none text-primary fw-semibold">
+              {{ usuario.username }}
+            </a>
+          </td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ usuario.categoria_cliente.nombre }}</td>
+          <td>
+            <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+            <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este usuario?');">🗑️ Eliminar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

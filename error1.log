@@ -1,0 +1,16 @@
+Watching for file changes with StatReloader
+[11/Mar/2025 18:03:09] "GET / HTTP/1.1" 200 1546
+[11/Mar/2025 18:03:12] "GET /signin/ HTTP/1.1" 200 4148
+[11/Mar/2025 18:03:12] "GET /carrito/conteo/ HTTP/1.1" 302 0
+Not Found: /accounts/login/
+[11/Mar/2025 18:03:12] "GET /accounts/login/?next=/carrito/conteo/ HTTP/1.1" 404 5970
+[11/Mar/2025 18:03:20] "POST /signin/ HTTP/1.1" 302 0
+[11/Mar/2025 18:03:20] "GET /sushi/ HTTP/1.1" 200 56327
+[11/Mar/2025 18:03:20] "GET /carrito/conteo/ HTTP/1.1" 200 18
+[11/Mar/2025 18:03:22] "GET /carrito/agregar/11/ HTTP/1.1" 200 62
+[11/Mar/2025 18:03:23] "GET /carrito/conteo/ HTTP/1.1" 200 18
+[11/Mar/2025 18:03:24] "GET /carrito/ HTTP/1.1" 200 9251
+[11/Mar/2025 18:03:24] "GET /carrito/conteo/ HTTP/1.1" 200 18
+[11/Mar/2025 18:03:24] "GET /carrito/obtener_total/ HTTP/1.1" 200 65
+Internal Server Error: /carrito/comprar/
+[11/Mar/2025 18:03:29] "POST /carrito/comprar/ HTTP/1.1" 500 130

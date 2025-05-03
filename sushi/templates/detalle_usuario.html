@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+  <a href="{% url 'crud_usuarios' %}" class="btn btn-outline-secondary mb-4">⬅️ Volver a la lista</a>
+
+  <div class="card shadow">
+    <div class="card-header bg-dark text-white">
+      <h4 class="mb-0">👤 Detalles del Usuario</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>ID:</strong> {{ usuario.id }}</p>
+      <p><strong>Usuario:</strong> {{ usuario.username }}</p>
+      <p><strong>Email:</strong> {{ usuario.email }}</p>
+      <p><strong>Teléfono:</strong> {{ usuario.telefono|default:"No especificado" }}</p>
+      <p><strong>Categoría:</strong> {{ usuario.categoria_cliente.nombre }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
