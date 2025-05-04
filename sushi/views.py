@@ -311,17 +311,19 @@ def crear_usuario(request):
             messages.error(request, "El nombre de usuario ya existe.")
         else:
             categoria = get_object_or_404(CategoriaCliente, pk=categoria_id)
-            nuevo_usuario = Usuario.objects.create_user(
+            nuevo_usuario = Usuario(
                 username=username,
-                password=password,
                 email=email,
                 telefono=telefono,
                 categoria_cliente=categoria
             )
+            nuevo_usuario.set_password(password)
+            nuevo_usuario.save()
             messages.success(request, "Usuario creado correctamente.")
             return redirect('crud_usuarios')
 
     return render(request, 'crear_usuario.html', {'categorias': categorias})
+
 
 
 @solo_admin
