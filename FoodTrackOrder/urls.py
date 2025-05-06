@@ -20,6 +20,8 @@ from django.contrib import admin
 from django.urls import path
 from sushi import views
 from sushi.views import actualizar_cantidad_carrito, carrito, agregar_al_carrito, eliminar_del_carrito, obtener_conteo_carrito, catalogo
+from django.shortcuts import redirect
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -62,5 +64,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'sushi.views.error_404_view'
 
 

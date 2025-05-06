@@ -100,7 +100,7 @@ for prod in productos_software:
             categoria_cliente=cliente
         )
         if created := obtener_imagen(img_sw_path):
-            producto.imagen.save("sw demo.png", created, save=True)
+            producto.imagen.save("Swdemo.png", created, save=True)
 
 # Crear usuario Emiliong
 admin_categoria = CategoriaCliente.objects.get(nombre="Admin")

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.conf.urls import handler404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
@@ -477,12 +478,8 @@ def eliminar_venta(request, venta_id):
 @login_required
 def detalle_venta(request, venta_id):
     venta = get_object_or_404(Venta, id=venta_id)
-
-    # Verificación: solo el dueño o un admin puede verla
     if request.user != venta.usuario and (not request.user.categoria_cliente or request.user.categoria_cliente.nombre.lower() != "admin"):
         return redirect('ver_ventas')
-
-    # Parsear los productos desde el campo de texto
     productos = []
     for linea in venta.productos.strip().split("\n"):
         if "x" in linea and " - $" in linea:
@@ -514,3 +511,31 @@ def detalle_producto(request, producto_id):
     return render(request, 'detalle_producto.html', {'producto': producto})
 
 
+
+def csrf_error_view(request, reason=""):
+    logout(request)
+    if request.path.startswith('/admin'):
+        return redirect('/admin/login/?next=/admin/') 
+
+    response = render(request, 'csrf_error.html', {
+        "reason": reason,
+    })
+    response.status_code = 403
+    return response
+
+from django.conf import settings
+from django.contrib import messages
+import logging
+
+logger = logging.getLogger(__name__)
+
+def error_404_view(request, exception):
+ 
+    logger.warning(f"Intento de acceso a URL no encontrada: {request.path} por el usuario: {request.user}")
+    
+    if request.user.is_authenticated:
+        messages.warning(request, f"La página {request.path} no existe. Has sido redirigido al catálogo.")
+        return redirect('catalogo')
+    else:
+        messages.warning(request, f"La página {request.path} no existe. Por favor inicia sesión.")
+        return redirect('signin')

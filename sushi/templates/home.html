@@ -6,6 +6,11 @@
 {% block content %}
 <head>
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <style>
+    .text-justify {
+      text-align: justify;
+    }
+  </style>
 </head>
 
 <div class="container my-5">
@@ -20,7 +25,7 @@
     </div>
     <div class="col-md-6">
       <h3 class="text-secondary mb-3">¿Quiénes somos?</h3>
-      <p>
+      <p class="text-justify">
         <strong>SPI (Soluciones para la Industria)</strong> es una empresa mexicana dedicada a brindar soluciones integrales 
         para organizaciones que buscan eficiencia y soporte tecnológico. Nuestro compromiso es ayudarte a crecer 
         mediante herramientas digitales, desarrollo a medida y soporte técnico confiable.
@@ -30,6 +35,39 @@
         <li class="list-group-item">🖥️ Servicios técnicos en cómputo, hardware y redes</li>
         <li class="list-group-item">🔧 Instalación y configuración de servidores</li>
         <li class="list-group-item">📦 Venta e instalación de equipos industriales y empresariales</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="my-5">
+
+  <div class="row">
+    <div class="col-md-4">
+      <h4 class="text-primary">🎯 Misión</h4>
+      <p class="text-justify">
+        Proveer soluciones integrales en equipos, tecnología y servicios especializados, soluciones adaptadas a las 
+        necesidades y presupuestos de nuestros clientes, a través de la innovación, calidad y un servicio excepcional, 
+        contribuyendo al desarrollo de la industria.
+      </p>
+    </div>
+
+    <div class="col-md-4">
+      <h4 class="text-primary">🌟 Visión</h4>
+      <p class="text-justify">
+        Ser reconocidos como líderes en el suministro de insumos, equipos electrónicos y servicios especializados en la 
+        industria, impulsando la eficiencia y el crecimiento de nuestros clientes mediante tecnologías avanzadas y un 
+        compromiso constante con la excelencia.
+      </p>
+    </div>
+
+    <div class="col-md-4">
+      <h4 class="text-primary">💡 Valores</h4>
+      <ul class="list-unstyled text-justify">
+        <li><strong>Compromiso con el Cliente:</strong> Siempre presentes, incluso en emergencias.</li>
+        <li><strong>Integridad:</strong> Actuamos con honestidad y reconocemos nuestras áreas de oportunidad.</li>
+        <li><strong>Innovación:</strong> Promovemos creatividad y mejora continua.</li>
+        <li><strong>Trabajo en equipo:</strong> Potenciamos talento y colaboración.</li>
+        <li><strong>Responsabilidad social:</strong> Fomentamos sostenibilidad y apoyo comunitario.</li>
       </ul>
     </div>
   </div>

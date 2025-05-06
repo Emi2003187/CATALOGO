@@ -140,4 +140,11 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
-EMAIL_SOLICITUD_DESTINO = 'angelf.emi.144@gmail.com'
+EMAIL_SOLICITUD_DESTINO = 'mosiahbernal@solucionesparalaindustria.com.mx'
+
+
+CSRF_FAILURE_VIEW = 'sushi.views.csrf_error_view'
+
+
+LOGIN_URL = '/signin/'
+

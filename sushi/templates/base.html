@@ -1,64 +1,69 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SPI</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body>
+<html lang="es">
+<head>
+  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>SPI – Soluciones para la Industria</title>
+    <link rel="icon" href="{% static 'sushi/images/icon.png' %}" type="image/png"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+ 
     {% include '_navbar.html' %}
-    
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
 
     {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-success">
-          {{ message }}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
         </div>
-      {% endfor %}
     {% endif %}
 
+    <!-- Bootstrap JS (bundle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script global para actualizar el contador del carrito -->
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", () => {
         function actualizarConteoCarrito() {
             fetch("{% url 'obtener_conteo_carrito' %}")
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("cart-count").innerText = data.total_items;
+                .then(r => r.json())
+                .then(d => {
+                    const badge = document.getElementById("cart-count");
+                    if (badge) badge.textContent = d.total_items;
                 });
         }
-
-        document.querySelectorAll(".agregar-carrito").forEach(button => {
-            button.addEventListener("click", function () {
-                let platilloId = this.dataset.platillo;
-                fetch(`/carrito/agregar/${platilloId}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        alert("Platillo agregado al carrito");
-                        actualizarConteoCarrito();
-                    });
-            });
-        });
-
-        document.querySelectorAll(".eliminar-carrito").forEach(button => {
-            button.addEventListener("click", function () {
-                let platilloId = this.dataset.platillo;
-                fetch(`/carrito/eliminar/${platilloId}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        alert("Platillo eliminado del carrito");
-                        location.reload();
-                    });
-            });
-        });
-
         actualizarConteoCarrito();
+
+        /* Delegación de eventos para botones Agregar / Eliminar carrito */
+        document.body.addEventListener("click", e => {
+            const target = e.target.closest("[data-producto], [data-platillo]");
+            if (!target) return;
+
+            const id   = target.dataset.producto || target.dataset.platillo;
+            const tipo = target.classList.contains("eliminar-carrito") ? "eliminar" : "agregar";
+
+            fetch(`/carrito/${tipo}/${id}/`, {method: "POST", headers: {"X-CSRFToken": "{{ csrf_token }}"}})
+                .then(r => r.json())
+                .then(d => {
+                    actualizarConteoCarrito();
+                    if (tipo === "eliminar") location.reload();
+                });
+        });
     });
     </script>
 
-  </body>
+    <!-- Bloque para scripts adicionales -->
+    {% block extra_scripts %}{% endblock %}
+</body>
 </html>
